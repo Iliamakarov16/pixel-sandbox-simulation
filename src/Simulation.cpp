@@ -1,26 +1,26 @@
 #include "Simulation.hpp"
 
 void Simulation::simulateGranular(const int& row, const int& col, const SimMaterial& material){
-    const int bottomCol = row + neighborsOffset[BOTTOM].second;
-    const int bottomRow = col + neighborsOffset[BOTTOM].first;
-    const int leftCol = row + neighborsOffset[BOTTOM_LEFT].second;
-    const int leftRow = col + neighborsOffset[BOTTOM_LEFT].first;
-    const int rightCol = row + neighborsOffset[BOTTOM_RIGHT].second;
-    const int rightRow = col + neighborsOffset[BOTTOM_RIGHT].first;
+    const int bottomRow = row + neighborsOffset[BOTTOM].first;
+    const int bottomCol = col + neighborsOffset[BOTTOM].second;
+    const int leftRow = row + neighborsOffset[BOTTOM_LEFT].first;
+    const int leftCol = col + neighborsOffset[BOTTOM_LEFT].second;
+    const int rightRow = row + neighborsOffset[BOTTOM_RIGHT].first;
+    const int rightCol = col + neighborsOffset[BOTTOM_RIGHT].second;
 
-    if (grid.isValidCell(bottomCol, bottomRow) &&
-        grid.getCell(bottomCol, bottomRow).id == EMPTY) {
-        tempGrid.setCell(bottomCol, bottomRow, material);
+    if (isValidCell(bottomRow, bottomCol) &&
+        getCell(bottomRow, bottomCol).id == EMPTY) {
+        tempGrid.setCell(bottomRow, bottomCol, material);
         return;
     }
-    else if (grid.isValidCell(leftCol, leftRow) &&
-        grid.getCell(leftCol, leftRow).id == EMPTY) {
-        tempGrid.setCell(leftCol, leftRow, material);
+    else if (isValidCell(leftRow, leftCol) &&
+        getCell(leftRow, leftCol).id == EMPTY) {
+        tempGrid.setCell(leftRow, leftCol, material);
         return;
     }
-    else if (grid.isValidCell(rightCol, rightRow) &&
-        grid.getCell(rightCol, rightRow).id == EMPTY) {
-        tempGrid.setCell(rightCol, rightRow, material);
+    else if (isValidCell(rightRow, rightCol) &&
+        getCell(rightRow, rightCol).id == EMPTY) {
+        tempGrid.setCell(rightRow, rightCol, material);
         return;
     }
 
@@ -35,6 +35,7 @@ void Simulation::simulateGranular(const int& row, const int& col, const SimMater
 //     if ()
 // }
 void Simulation::simulate(){
+    tempGrid.clear();
     for(int row = 0; row < grid.getRows(); row++){
         for(int col = 0; col < grid.getColumns(); col++){
             if (grid.getCell(row, col).type == GRANULAR){

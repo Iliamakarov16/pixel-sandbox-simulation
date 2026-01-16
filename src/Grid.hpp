@@ -24,6 +24,7 @@ public:
 
     void setCell(const int& row, const int& col, const SimMaterial& material);
     SimMaterial getCell(const int& row, const int& col) const;
+    void clear();
 
     int getRows() const {return rows_;}
     int getColumns() const {return cols_;}

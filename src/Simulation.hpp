@@ -3,7 +3,7 @@
 #include "include/raylib.h"
 #include "Grid.hpp"
 #include "Material.hpp"
-#include "utility"
+#include <utility>
 
 class Simulation {
 private:
@@ -22,14 +22,14 @@ public:
     grid(rows, cols, cellSize),
     tempGrid(rows, cols, cellSize),
     neighborsOffset{
-        {0, 1},  // above
-        {0, -1}, // below
-        {1, 0},  // right
-        {-1, 0}, // left
-        {1, 1},  // upper right
-        {-1, 1}, // upper left
-        {1, -1}, // lower right
-        {-1, -1} // lower left
+        {-1, 0}, // above
+        {1, 0},  // below
+        {0, 1},  // right
+        {0, -1}, // left
+        {-1, 1}, // upper right
+        {-1, -1}, // upper left
+        {1, 1},  // lower right
+        {1, -1}  // lower left
     }{};
 
     void draw() const{ grid.draw();}
