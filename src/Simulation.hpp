@@ -10,10 +10,14 @@ private:
     Grid grid;
     Grid tempGrid;
     std::vector<std::pair<int, int>> neighborsOffset;
-    
+
+    //Material type physics
     void simulateGranular(const int& row, const int& col, const SimMaterial& material);
     void simulateLiquid(const int& row, const int& col, const SimMaterial& material);
     void simulateGas(const int& row, const int& col, const SimMaterial& material);
+
+    //Material ID collision interaction
+    void SandCollisions(const int& row, const int& col, const SimMaterial& Sand);
 
     void simulatePhysics(const int& row, const int& col);
     void simulateCollisions(const int& row, const int& col);
@@ -33,7 +37,6 @@ public:
     }{};
 
     void draw() const{ grid.draw();}
-
     void simulate();
 
     void setCell(const int& row, const int& col, const SimMaterial& material)
@@ -42,6 +45,7 @@ public:
         {return grid.getCell(row, col);}
     bool isValidCell(const int& row, const int& col) const
         {return grid.isValidCell(row, col);};
+    int getCellSize() const {return grid.getCellSize();}
 
 };
 

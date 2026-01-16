@@ -1,5 +1,6 @@
 #include "Simulation.hpp"
 
+//checks if one of bottom neighbors is empty, and sets material to new position if true. 
 void Simulation::simulateGranular(const int& row, const int& col, const SimMaterial& material){
     const int bottomRow = row + neighborsOffset[BOTTOM].first;
     const int bottomCol = col + neighborsOffset[BOTTOM].second;
@@ -8,18 +9,16 @@ void Simulation::simulateGranular(const int& row, const int& col, const SimMater
     const int rightRow = row + neighborsOffset[BOTTOM_RIGHT].first;
     const int rightCol = col + neighborsOffset[BOTTOM_RIGHT].second;
 
-    if (isValidCell(bottomRow, bottomCol) &&
-        getCell(bottomRow, bottomCol).id == EMPTY) {
+    
+    if (getCell(bottomRow, bottomCol).id == EMPTY) {
         tempGrid.setCell(bottomRow, bottomCol, material);
         return;
     }
-    else if (isValidCell(leftRow, leftCol) &&
-        getCell(leftRow, leftCol).id == EMPTY) {
+    else if (getCell(leftRow, leftCol).id == EMPTY) {
         tempGrid.setCell(leftRow, leftCol, material);
         return;
     }
-    else if (isValidCell(rightRow, rightCol) &&
-        getCell(rightRow, rightCol).id == EMPTY) {
+    else if (getCell(rightRow, rightCol).id == EMPTY) {
         tempGrid.setCell(rightRow, rightCol, material);
         return;
     }

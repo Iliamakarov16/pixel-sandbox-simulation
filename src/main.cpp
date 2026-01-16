@@ -1,5 +1,5 @@
 #include <include/raylib.h>
-#include "Simulation.hpp"
+#include "Game.hpp"
 
 int main() 
 {
@@ -11,16 +11,14 @@ int main()
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Pixel sandbox game");
     SetTargetFPS(FPS);
     
-    Simulation sim(SCREEN_WIDTH, SCREEN_HEIGHT, CELL_SIZE); 
-
-    sim.setCell(10, 10, MATERIALS[SAND]);
+    Game game(SCREEN_WIDTH, SCREEN_HEIGHT, CELL_SIZE); 
 
     while (!WindowShouldClose()){
         BeginDrawing();
-        sim.simulate();
+        game.physics();
+        game.gameControlls();
         ClearBackground(BLACK);
-        sim.draw();
-
+        game.draw();
         EndDrawing();
     }
     

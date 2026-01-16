@@ -21,7 +21,7 @@ void Grid::setCell(const int& row, const int& col, const SimMaterial& material){
 
 SimMaterial Grid::getCell(const int& row, const int& col) const{
     if (!isValidCell(row, col)){
-        throw std::out_of_range("Cell is out of bound.");
+        return MATERIALS[MATERIAL_COUNT];
     }
     return cells_[row][col];
 }
