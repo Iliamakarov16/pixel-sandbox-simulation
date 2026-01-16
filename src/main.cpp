@@ -1,22 +1,24 @@
-#include <raylib.h>
+#include <include/raylib.h>
+#include "Grid.hpp"
 
 int main() 
-{   
-    constexpr int screenWidth = 800;
-    constexpr int screenHeight = 600;
+{
+    constexpr int SCREEN_WIDTH = 1200;
+    constexpr int SCREEN_HEIGHT = 1200;
+    const int CELL_SIZE = 20;
+    const int FPS = 30;
     
-    InitWindow(screenWidth, screenHeight, "My first RAYLIB program!");
-    SetTargetFPS(60);
-    //Game loop
-    while (!WindowShouldClose())
-    {
-        //Event handling and logic  
-        
-        //Update position
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Pixel sandbox game");
+    SetTargetFPS(FPS);
+    
+    Grid grid(SCREEN_WIDTH, SCREEN_HEIGHT, CELL_SIZE); 
 
-        //Drawing
+    while (!WindowShouldClose()){
         BeginDrawing();
-            ClearBackground(BLACK);
+        
+        ClearBackground(BLACK);
+        grid.draw();
+
         EndDrawing();
     }
     
