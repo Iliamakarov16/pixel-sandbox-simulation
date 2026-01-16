@@ -9,19 +9,21 @@ void Grid::draw() const{
 }
 
 bool Grid::isValidCell(const int& row, const int& col) const{
-    if ((row < rows_ && row >= 0) && (col < cols_ && col >= 0)) return true;
-    return false;
+    return ((row < rows_ && row >= 0) && (col < cols_ && col >= 0));
 }
 
 void Grid::setCell(const int& row, const int& col, const SimMaterial& material){
     if (isValidCell(row, col) && cells_[row][col].id == EMPTY){
         cells_[row][col] = material; 
     }
+    else if (isValidCell(row, col) && material.id == EMPTY){//allows setting empty
+        cells_[row][col] = material;
+    }
 }
 
 SimMaterial Grid::getCell(const int& row, const int& col) const{
     if (!isValidCell(row, col)){
-        return MATERIALS[MATERIAL_COUNT];
+        return getMaterial(MATERIAL_COUNT);
     }
     return cells_[row][col];
 }
@@ -32,4 +34,8 @@ void Grid::clear(){
             cells_[row][col] = getMaterial(EMPTY);
         }
     }
+}
+
+bool Grid::isEmptyCell(const int& row, const int& col) const{
+    return isValidCell(row, col) && cells_[row][col].id == EMPTY;
 }

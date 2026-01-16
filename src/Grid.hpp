@@ -21,7 +21,7 @@ public:
     void draw() const;
 
     bool isValidCell(const int& row, const int& col) const;
-
+    bool isEmptyCell(const int& row, const int& col) const;
     void setCell(const int& row, const int& col, const SimMaterial& material);
     SimMaterial getCell(const int& row, const int& col) const;
     void clear();

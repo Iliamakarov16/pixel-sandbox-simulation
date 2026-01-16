@@ -15,10 +15,14 @@ int main()
 
     while (!WindowShouldClose()){
         BeginDrawing();
-        game.physics();
+
+        game.simulation();
         game.gameControlls();
+
         ClearBackground(BLACK);
+
         game.draw();
+        
         EndDrawing();
     }
     

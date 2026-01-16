@@ -7,9 +7,9 @@
 
 class Simulation {
 private:
-    Grid grid;
-    Grid tempGrid;
-    std::vector<std::pair<int, int>> neighborsOffset;
+    Grid grid_;
+    Grid tempGrid_;
+    std::vector<std::pair<int, int>> neighborsOffset_;
 
     //Material type physics
     void simulateGranular(const int& row, const int& col, const SimMaterial& material);
@@ -23,9 +23,9 @@ private:
     void simulateCollisions(const int& row, const int& col);
 public:
     Simulation(const int& rows, const int& cols, const int& cellSize) :
-    grid(rows, cols, cellSize),
-    tempGrid(rows, cols, cellSize),
-    neighborsOffset{
+    grid_(rows, cols, cellSize),
+    tempGrid_(rows, cols, cellSize),
+    neighborsOffset_{
         {-1, 0}, // above
         {1, 0},  // below
         {0, 1},  // right
@@ -35,18 +35,21 @@ public:
         {1, 1},  // lower right
         {1, -1}  // lower left
     }{};
+    
+    void simulate();    
 
-    void draw() const{ grid.draw();}
-    void simulate();
+    void draw() const{ grid_.draw();}
 
     void setCell(const int& row, const int& col, const SimMaterial& material)
-        {grid.setCell(row, col, material);}
+        {grid_.setCell(row, col, material);}
     SimMaterial getCell(const int& row, const int& col) const
-        {return grid.getCell(row, col);}
-    bool isValidCell(const int& row, const int& col) const
-        {return grid.isValidCell(row, col);};
-    int getCellSize() const {return grid.getCellSize();}
+        {return grid_.getCell(row, col);}
+    bool isEmptyCell(const int& row, const int& col) const
+        {return grid_.isEmptyCell(row, col);}
 
+    void clear(){grid_.clear();}
+
+    int getCellSize() const {return grid_.getCellSize();}
 };
 
 enum Directions{//enum for offset
