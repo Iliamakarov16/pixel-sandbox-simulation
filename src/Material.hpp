@@ -4,13 +4,13 @@
 #include <string>
 
 enum MaterialID { EMPTY, SAND, WATER, STONE, VAPOR, MATERIAL_COUNT };
-enum MaterialType { NONE, POWDER, SOLID, LIQUID, GAS };
+enum MaterialType { NONE, GRANULAR, SOLID, LIQUID, GAS };
 
 struct SimMaterial{
     std::string name;
     MaterialID id;
     MaterialType type;
-    Color color;
+    Color color; 
 };
 
 extern const SimMaterial MATERIALS[MATERIAL_COUNT];

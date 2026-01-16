@@ -8,22 +8,24 @@
 class Grid{
 private:
     int rows_;
-    int columns_;
+    int cols_;
     int cellSize_;
     std::vector<std::vector<SimMaterial>> cells_;
 public:
-    Grid(const int& rows, const int& columns, const int& cellSize) 
+    Grid(const int& rows, const int& cols, const int& cellSize) 
     : rows_(rows / cellSize),
-      columns_(columns / cellSize),
+      cols_(cols / cellSize),
       cellSize_(cellSize),
-      cells_(rows_, std::vector<SimMaterial>(columns_, getMaterial(EMPTY))){}; 
+      cells_(rows_, std::vector<SimMaterial>(cols_, getMaterial(EMPTY))){}; 
     
     void draw() const;
 
-    bool isValidCell(const int& row, const int& column) const;
+    bool isValidCell(const int& row, const int& col) const;
 
-    void setCell(const int& row, const int& column, const SimMaterial& material);
-    SimMaterial getCell(const int& row, const int& column) const;
+    void setCell(const int& row, const int& col, const SimMaterial& material);
+    SimMaterial getCell(const int& row, const int& col) const;
 
-    
+    int getRows() const {return rows_;}
+    int getColumns() const {return cols_;}
+    int getCellSize() const {return cellSize_;}
 };
