@@ -39,3 +39,7 @@ void Grid::clear(){
 bool Grid::isEmptyCell(const int& row, const int& col) const{
     return isValidCell(row, col) && cells_[row][col].id == EMPTY;
 }
+
+void Grid::swapCells(const int& row_1, const int& col_1, const int& row_2, const int& col_2){
+    std::swap(cells_[row_1][col_1], cells_[row_2][col_2]);
+}

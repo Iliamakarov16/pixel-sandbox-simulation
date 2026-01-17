@@ -22,6 +22,7 @@ public:
 
     bool isValidCell(const int& row, const int& col) const;
     bool isEmptyCell(const int& row, const int& col) const;
+
     void setCell(const int& row, const int& col, const SimMaterial& material);
     SimMaterial getCell(const int& row, const int& col) const;
     void clear();
@@ -29,4 +30,6 @@ public:
     int getRows() const {return rows_;}
     int getColumns() const {return cols_;}
     int getCellSize() const {return cellSize_;}
+
+    void swapCells(const int& row_1, const int& col_1, const int& row_2, const int& col_2);
 };

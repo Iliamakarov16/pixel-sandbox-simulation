@@ -17,12 +17,12 @@ int main()
         BeginDrawing();
 
         game.simulation();
-        game.gameControlls();
+        game.gameControls();
 
         ClearBackground(BLACK);
 
         game.draw();
-        
+
         EndDrawing();
     }
     
