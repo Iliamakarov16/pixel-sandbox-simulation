@@ -23,7 +23,7 @@ void Grid::setCell(const int& row, const int& col, const SimMaterial& material){
 
 SimMaterial Grid::getCell(const int& row, const int& col) const{
     if (!isValidCell(row, col)){
-        return getMaterial(MATERIAL_COUNT);
+        return getMaterial(EMPTY);
     }
     return cells_[row][col];
 }

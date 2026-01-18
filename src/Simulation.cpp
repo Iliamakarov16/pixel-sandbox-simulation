@@ -213,7 +213,7 @@ void Simulation::simulateSolid(const int& row, const int& col, const SimMaterial
 }
 
 void Simulation::simulatePhysics(){
-    //clear temps
+    //clears temps
     tempGrid_.clear();
     for (int row = 0; row < grid_.getRows(); row++){
         for (int col = 0; col < grid_.getColumns(); col++){
@@ -225,10 +225,11 @@ void Simulation::simulatePhysics(){
             tempGasVx_[row][col] = 0;
         }
     }
-    //simulate
+    //simulates
     for(int row = 0; row < grid_.getRows(); row++){
         for(int col = 0; col < grid_.getColumns(); col++){
             if (grid_.getCell(row, col).type == GRANULAR){
+                SandInteractions(row, col, getCell(row, col));
                 simulateGranular(row, col, getCell(row, col));
             }
             else if (grid_.getCell(row, col).type == LIQUID){
@@ -247,8 +248,26 @@ void Simulation::simulatePhysics(){
     liquidVx_ = tempLiquidVx_;
     gasVx_ = tempGasVx_;
 }
-// void Simulation::SandInteractions();
+void Simulation::SandInteractions(const int& row, const int& col, const SimMaterial& Sand) {
+    for (auto neighbor : neighborsOffset_){
+        if (grid_.getCell(row + neighbor.first, col + neighbor.second).id == WATER){    
+            tempGrid_.setCell(row, col, getMaterial(WET_SAND));
+        }
+    }
+}
 
+// void Simulation::simulateInteractions(){
+//     for(int row = 0; row < grid_.getRows(); row++){
+//         for(int col = 0; col < grid_.getColumns(); col++){
+//             if (grid_.getCell(row, col).id == SAND){
+                
+//             }
+//         }
+//     }
+//     grid_ = tempGrid_;
+    
+// }
 void Simulation::simulate(){
     simulatePhysics();
+    // simulateInteractions();
 }
