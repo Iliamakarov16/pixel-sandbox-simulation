@@ -3,7 +3,7 @@
 void Grid::draw() const{
     for (int row = 0; row < rows_; row++){
         for (int col = 0; col < cols_; col++){
-            DrawRectangle(col * cellSize_, row * cellSize_, cellSize_, cellSize_, cells_[row][col].color);
+            DrawRectangle(col * cellSize_, row * cellSize_, cellSize_, cellSize_, getCell(row, col).color);
         }
     }
 }

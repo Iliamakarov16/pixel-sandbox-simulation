@@ -54,8 +54,7 @@ public:
 
     void draw() const{ grid_.draw();}
 
-    void setCell(const int& row, const int& col, const SimMaterial& material)
-        {grid_.setCell(row, col, material);}
+    void setCell(const int& row, const int& col, const SimMaterial& material);
 
     SimMaterial getCell(const int& row, const int& col) const
         {return grid_.getCell(row, col);}

@@ -256,18 +256,15 @@ void Simulation::SandInteractions(const int& row, const int& col, const SimMater
     }
 }
 
-// void Simulation::simulateInteractions(){
-//     for(int row = 0; row < grid_.getRows(); row++){
-//         for(int col = 0; col < grid_.getColumns(); col++){
-//             if (grid_.getCell(row, col).id == SAND){
-                
-//             }
-//         }
-//     }
-//     grid_ = tempGrid_;
-    
-// }
 void Simulation::simulate(){
     simulatePhysics();
     // simulateInteractions();
+}
+
+void Simulation::setCell(const int& row, const int& col, const SimMaterial& material){
+    SimMaterial placedMat = material;
+    if (GetRandomValue(0,2) == 0){//33.3% chance for sand to have alt color
+        placedMat.color = placedMat.altColor;
+    }
+    grid_.setCell(row, col, placedMat);
 }
