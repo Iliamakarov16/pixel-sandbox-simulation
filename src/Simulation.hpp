@@ -2,7 +2,7 @@
 
 #include "include/raylib.h"
 #include "Grid.hpp"
-#include "Material.hpp"
+#include "SimMaterial.hpp"
 #include <vector>
 #include <utility>
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "include/raylib.h"
-#include "Material.hpp"
+#include "SimMaterial.hpp"
 #include <vector>
 #include <stdexcept>
 
@@ -13,7 +13,7 @@ private:
     std::vector<std::vector<SimMaterial>> cells_;
 public:
     Grid(const int& rows, const int& cols, const int& cellSize) 
-    : rows_(rows / cellSize),
+    : rows_((rows / cellSize) / 2),
       cols_(cols / cellSize),
       cellSize_(cellSize),
       cells_(rows_, std::vector<SimMaterial>(cols_, getMaterial(EMPTY))){}; 

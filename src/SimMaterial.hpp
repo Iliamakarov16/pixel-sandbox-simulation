@@ -3,7 +3,7 @@
 #include "include/raylib.h"
 #include <string>
 
-enum MaterialID { EMPTY, SAND, WATER, STONE, VAPOR, WET_SAND, MATERIAL_COUNT };
+enum MaterialID { EMPTY, SAND, WATER, STONE, STEAM, WET_SAND, MATERIAL_COUNT };
 enum MaterialType { NONE, GRANULAR, SOLID, LIQUID, GAS };
 
 const Color ALTSAND = {242, 242, 0, 255};

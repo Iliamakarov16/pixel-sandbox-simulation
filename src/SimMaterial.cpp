@@ -1,11 +1,11 @@
-#include "Material.hpp"
+#include "SimMaterial.hpp"
 
 const SimMaterial MATERIALS[MATERIAL_COUNT] = {//Material table
     { "Empty", EMPTY, NONE, BLACK, BLACK },
     { "Sand", SAND, GRANULAR, YELLOW, ALTSAND },
     { "Water", WATER, LIQUID, BLUE, ALTWATER },
-    { "Stone", STONE, SOLID, GRAY, GRAY },
-    { "Vapor", VAPOR, GAS, SKYBLUE, SKYBLUE },
+     { "Stone", STONE, SOLID, GRAY, GRAY },
+    { "Steam", STEAM, GAS, SKYBLUE, SKYBLUE },
     { "WetSand", WET_SAND, GRANULAR, WETSAND, WETSAND }
 };
 
