@@ -194,7 +194,7 @@ endif
 #  -std=gnu99           defines C language mode (GNU C from 1999 revision)
 #  -Wno-missing-braces  ignore invalid warning (GCC bug 53119)
 #  -D_DEFAULT_SOURCE    use with -std=c99 on Linux and PLATFORM_WEB, required for timespec
-CFLAGS += -Wall -std=c++14 -D_DEFAULT_SOURCE -Wno-missing-braces
+CFLAGS += -Wall -std=c++20 -D_DEFAULT_SOURCE -Wno-missing-braces
 
 ifeq ($(BUILD_MODE),DEBUG)
     CFLAGS += -g -O0
@@ -369,8 +369,19 @@ OBJ_DIR = obj
 
 # Define all object files from source files
 SRC = $(call rwildcard, *.c, *.h)
-#OBJS = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-OBJS ?= main.c
+#(Changed).cpp files are dealt with reccursively
+CPP_SOURCES = $(call rwildcard,$(SRC_DIR)/,*.cpp)
+OBJS ?= $(CPP_SOURCES)
+
+# If the caller passes a flat glob, expand recursively so subfolders work.
+ifneq ($(filter src/*.cpp src\\*.cpp,$(OBJS)),)
+    # Expand flat glob from CLI so subfolders are included.
+    override OBJS := $(CPP_SOURCES)
+endif
+# If a wildcard slipped through, expand to all cpp sources.
+ifneq ($(findstring *,$(OBJS)),)
+    override OBJS := $(CPP_SOURCES)
+endif
 
 # For Android platform we call a custom Makefile.Android
 ifeq ($(PLATFORM),PLATFORM_ANDROID)

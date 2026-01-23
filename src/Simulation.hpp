@@ -5,6 +5,7 @@
 #include "SimMaterial.hpp"
 #include <vector>
 #include <utility>
+#include <algorithm>
 
 class Simulation {
 private:
@@ -65,6 +66,8 @@ public:
         {return grid_.isEmptyCell(row, col) && tempGrid_.isEmptyCell(row, col);}
 
     int getCellSize() const {return grid_.getCellSize();}
+
+    SimMaterial varyColor(SimMaterial material);
 };
 
 enum Directions{//enum for offset

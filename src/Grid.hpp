@@ -3,7 +3,6 @@
 #include "include/raylib.h"
 #include "SimMaterial.hpp"
 #include <vector>
-#include <stdexcept>
 
 class Grid{
 private:
@@ -13,7 +12,7 @@ private:
     std::vector<std::vector<SimMaterial>> cells_;
 public:
     Grid(const int& rows, const int& cols, const int& cellSize) 
-    : rows_((rows / cellSize) / 2),
+    : rows_(rows / cellSize),
       cols_(cols / cellSize),
       cellSize_(cellSize),
       cells_(rows_, std::vector<SimMaterial>(cols_, getMaterial(EMPTY))){}; 

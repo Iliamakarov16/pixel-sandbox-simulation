@@ -152,14 +152,15 @@ void Game::keyboardControls(){
         currentMaterial = getMaterial(STONE);
     }
     if (IsKeyPressed(KEY_LEFT_BRACKET)){
-        int fps = GetFPS();
-        fps -= 1;
-        SetTargetFPS(fps);
+        if (ticksPerSecond > 0){
+            ticksPerSecond -= 1;
+        }
+        else{
+            ticksPerSecond = 0;
+        }
     }
     if (IsKeyPressed(KEY_RIGHT_BRACKET)){
-        int fps = GetFPS();
-        fps += 1;
-        SetTargetFPS(fps);
+        ticksPerSecond++;
     }
     if (IsKeyPressed(KEY_O)){
         isCircleBrush = !isCircleBrush;
@@ -167,6 +168,7 @@ void Game::keyboardControls(){
 }
 
 void Game::gameControls(){
+    menu_.update();
     mouseControls();
     keyboardControls();
     changeBrushSize();
@@ -180,5 +182,26 @@ void Game::draw(){
     else{
         drawCircleBrush();
     }
-    
+    menu_.draw();
+    DrawText(TextFormat("TPS: %.0f", ticksPerSecond), 0, GetScreenHeight() - 20, 20, WHITE);
+}
+
+void Game::update(){
+    while (tickTriggered()){
+        sim.simulate();
+    }
+}
+
+bool Game::tickTriggered(){
+    const double currTime = GetTime();
+    if (ticksPerSecond <= 0.0){
+        return false;
+    }
+
+    const double tickInterval = 1.0 / ticksPerSecond;
+    if (currTime - lastUpdateTime >= tickInterval){
+        lastUpdateTime += tickInterval;
+        return true;
+    }
+    return false;
 }

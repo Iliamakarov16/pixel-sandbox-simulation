@@ -3,15 +3,19 @@
 #include "include/raylib.h"
 #include "SimMaterial.hpp"
 #include "Simulation.hpp"
+#include "interface/Menu.hpp"
 #include <iostream>
 
 class Game{
     Simulation sim;
 
     bool isGameActive;
+    double lastUpdateTime;
+    double ticksPerSecond;
     int brushSize;
     bool isCircleBrush;
     SimMaterial currentMaterial;
+    Menu menu_;
     
     void changeBrushSize();
 
@@ -25,11 +29,21 @@ class Game{
     
     void mouseControls();
     void keyboardControls();
+    bool tickTriggered();
 public:
     Game(const int& rows, const int& cols, const int& cellSize)
-        : sim(rows, cols, cellSize), isGameActive(true), brushSize(1), isCircleBrush(false), currentMaterial(getMaterial(SAND)) {}   
+        : sim(rows * 0.75/*75% of window is game field*/, cols, cellSize), 
+        isGameActive(true),
+        lastUpdateTime(0.0),
+        ticksPerSecond(30.0),
+        brushSize(1), 
+        isCircleBrush(false), 
+        currentMaterial(getMaterial(SAND)),
+        menu_(*this, static_cast<int>(rows * 0.75), DARKGRAY) {}   
         
-    void simulation(){sim.simulate();}
+    void update();
     void gameControls();
     void draw();
+    void setCurrentMaterial(MaterialID id){ currentMaterial = getMaterial(id); }
+    
 };

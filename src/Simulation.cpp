@@ -10,7 +10,7 @@ void Simulation::simulateGranular(const int& row, const int& col, const SimMater
     const int bRightCol = col + neighborsOffset_[BOTTOM_RIGHT].second;
 
     auto isLiquidCell = [&](const int& a, const int& b){
-        return grid_.getCell(a, b).type == LIQUID;
+        return getCell(a, b).type == LIQUID;
     };
 
     if (isEmptyForSim(bottomRow, bottomCol)) {
@@ -63,7 +63,7 @@ void Simulation::simulateLiquid(const int& row, const int& col, const SimMateria
         tempLiquidVx_[bottomRow][bottomCol] = desiredVx;
         return;
     }
-    //Water bounce: when the preferred diagonal is blocked, flip horizontal direction.
+    //When the preferred diagonal is blocked, flip horizontal direction.
     if (desiredVx < 0) {
         if (isEmptyForSim(bLeftRow, bLeftCol)) {
             tempGrid_.setCell(bLeftRow, bLeftCol, material);
@@ -89,29 +89,30 @@ void Simulation::simulateLiquid(const int& row, const int& col, const SimMateria
             return;
         }
     }
-    //Water bounce: when blocked to the left, tries the opposite side.
+    //When blocked to the left, tries the opposite side.
     if (desiredVx < 0) {
-        if (isEmptyForSim(leftRow, leftCol)) {
-            tempGrid_.setCell(leftRow, leftCol, material);
-            tempLiquidVx_[leftRow][leftCol] = desiredVx;
-            return;
-        } 
-        else if (isEmptyForSim(rightRow, rightCol)) {
-            desiredVx = 1;
-            tempGrid_.setCell(rightRow, rightCol, material);
-            tempLiquidVx_[rightRow][rightCol] = desiredVx;
-            return;
-        }
-    } else {//Water bounce: when blocked to the right, tries the opposite side.
+            if (isEmptyForSim(leftRow, leftCol)) {
+                tempGrid_.setCell(leftRow, leftCol, material);
+                tempGasVx_[leftRow][leftCol] = desiredVx;
+                return;
+            } 
+            else if (isEmptyForSim(rightRow, rightCol)) {
+                desiredVx = 1;
+                tempGrid_.setCell(rightRow, rightCol, material);
+                tempGasVx_[rightRow][rightCol] = desiredVx;
+                return;
+            }
+    } 
+    else {//When blocked to the right, tries the opposite side.
         if (isEmptyForSim(rightRow, rightCol)) {
             tempGrid_.setCell(rightRow, rightCol, material);
-            tempLiquidVx_[rightRow][rightCol] = desiredVx;
+            tempGasVx_[rightRow][rightCol] = desiredVx;
             return;
         } 
         else if (isEmptyForSim(leftRow, leftCol)) {
             desiredVx = -1;
             tempGrid_.setCell(leftRow, leftCol, material);
-            tempLiquidVx_[leftRow][leftCol] = desiredVx;
+            tempGasVx_[leftRow][leftCol] = desiredVx;
             return;
         }
     }
@@ -146,7 +147,7 @@ void Simulation::simulateGas(const int& row, const int& col, const SimMaterial& 
         }
     }
 
-    //Gas bounce: when the preferred diagonal is blocked, flip horizontal direction.
+    //When the preferred diagonal is blocked, flip horizontal direction.
     if (desiredVx < 0){
         if (isEmptyForSim(tLeftRow, tLeftCol)) {
             tempGrid_.setCell(tLeftRow, tLeftCol, material);
@@ -174,33 +175,33 @@ void Simulation::simulateGas(const int& row, const int& col, const SimMaterial& 
         }
     }
 
-    //Slow diffusion: only spread sideways occasionally to keep clouds cohesive.
+    //Only spread sideways occasionally to keep clouds cohesive.
     if (GetRandomValue(0, 3) == 0) {
-    if (desiredVx < 0) {
-        if (isEmptyForSim(leftRow, leftCol)) {
-            tempGrid_.setCell(leftRow, leftCol, material);
-            tempGasVx_[leftRow][leftCol] = desiredVx;
-            return;
-        } 
-        else if (isEmptyForSim(rightRow, rightCol)) {
-            desiredVx = 1;
-            tempGrid_.setCell(rightRow, rightCol, material);
-            tempGasVx_[rightRow][rightCol] = desiredVx;
-            return;
+        if (desiredVx < 0) {
+            if (isEmptyForSim(leftRow, leftCol)) {
+                tempGrid_.setCell(leftRow, leftCol, material);
+                tempGasVx_[leftRow][leftCol] = desiredVx;
+                return;
+            } 
+            else if (isEmptyForSim(rightRow, rightCol)) {
+                desiredVx = 1;
+                tempGrid_.setCell(rightRow, rightCol, material);
+                tempGasVx_[rightRow][rightCol] = desiredVx;
+                return;
+            }
+        } else {//When blocked to the right, tries the opposite side.
+            if (isEmptyForSim(rightRow, rightCol)) {
+                tempGrid_.setCell(rightRow, rightCol, material);
+                tempGasVx_[rightRow][rightCol] = desiredVx;
+                return;
+            } 
+            else if (isEmptyForSim(leftRow, leftCol)) {
+                desiredVx = -1;
+                tempGrid_.setCell(leftRow, leftCol, material);
+                tempGasVx_[leftRow][leftCol] = desiredVx;
+                return;
+            }
         }
-    } else {//Gas bounce: when blocked to the right, tries the opposite side.
-        if (isEmptyForSim(rightRow, rightCol)) {
-            tempGrid_.setCell(rightRow, rightCol, material);
-            tempGasVx_[rightRow][rightCol] = desiredVx;
-            return;
-        } 
-        else if (isEmptyForSim(leftRow, leftCol)) {
-            desiredVx = -1;
-            tempGrid_.setCell(leftRow, leftCol, material);
-            tempGasVx_[leftRow][leftCol] = desiredVx;
-            return;
-        }
-    }
     }
     
     
@@ -228,17 +229,19 @@ void Simulation::simulatePhysics(){
     //simulates
     for(int row = 0; row < grid_.getRows(); row++){
         for(int col = 0; col < grid_.getColumns(); col++){
-            if (grid_.getCell(row, col).type == GRANULAR){
-                SandInteractions(row, col, getCell(row, col));
+            if (getCell(row, col).type == GRANULAR){
+                if (getCell(row, col).id == SAND){
+                    SandInteractions(row, col, getCell(row, col));
+                }
                 simulateGranular(row, col, getCell(row, col));
             }
-            else if (grid_.getCell(row, col).type == LIQUID){
+            else if (getCell(row, col).type == LIQUID){
                 simulateLiquid(row, col, getCell(row, col));
             }
-            else if (grid_.getCell(row, col).type == GAS){
+            else if (getCell(row, col).type == GAS){
                 simulateGas(row, col, getCell(row, col));
             }
-            else if (grid_.getCell(row, col).type == SOLID){
+            else if (getCell(row, col).type == SOLID){
                 simulateSolid(row, col, getCell(row, col));
             }
         }
@@ -250,8 +253,8 @@ void Simulation::simulatePhysics(){
 }
 void Simulation::SandInteractions(const int& row, const int& col, const SimMaterial& Sand) {
     for (auto neighbor : neighborsOffset_){
-        if (grid_.getCell(row + neighbor.first, col + neighbor.second).id == WATER){    
-            tempGrid_.setCell(row, col, getMaterial(WET_SAND));
+        if (getCell(row + neighbor.first, col + neighbor.second).id == WATER){    
+            tempGrid_.setCell(row, col, varyColor(getMaterial(WET_SAND)));
         }
     }
 }
@@ -262,9 +265,23 @@ void Simulation::simulate(){
 }
 
 void Simulation::setCell(const int& row, const int& col, const SimMaterial& material){
+    grid_.setCell(row, col, varyColor(material));
+}
+
+SimMaterial Simulation::varyColor(SimMaterial material){
     SimMaterial placedMat = material;
-    if (GetRandomValue(0,2) == 0){//33.3% chance for sand to have alt color
-        placedMat.color = placedMat.altColor;
+    if (placedMat.id != EMPTY) {
+        // Slight per-placement tint so every material gets natural variation.
+        const int range = 12;
+        const int dr = GetRandomValue(-range, range);
+        const int dg = GetRandomValue(-range, range);
+        const int db = GetRandomValue(-range, range);
+        placedMat.color = {
+            static_cast<unsigned char>(std::clamp<int>(placedMat.color.r + dr, 0, 255)),
+            static_cast<unsigned char>(std::clamp<int>(placedMat.color.g + dg, 0, 255)),
+            static_cast<unsigned char>(std::clamp<int>(placedMat.color.b + db, 0, 255)),
+            placedMat.color.a
+        };
     }
-    grid_.setCell(row, col, placedMat);
+    return placedMat;
 }

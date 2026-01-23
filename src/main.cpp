@@ -16,7 +16,7 @@ int main()
     while (!WindowShouldClose()){
         BeginDrawing();
 
-        game.simulation();
+        game.update();
         game.gameControls();
 
         ClearBackground(BLACK);
