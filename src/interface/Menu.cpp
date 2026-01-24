@@ -1,5 +1,5 @@
 #include "Menu.hpp"
-#include "src\Game.hpp"
+#include "src/Game.hpp"
 
 Menu::Menu(Game& game, int menuTopRow, Color color)
     : game_(game),
@@ -23,7 +23,7 @@ Menu::Menu(Game& game, int menuTopRow, Color color)
             y += buttonHeight + padding;
         }
 
-        buttons_.push_back(std::make_unique<MaterialButton>(
+        materialButtons_.push_back(MaterialButton(
             x, y, material.name, BLACK, material.color, material, game_
         ));
         x += buttonWidth + padding;
@@ -35,16 +35,17 @@ void Menu::update(){
     if (!CheckCollisionPointRec(mouse, bounds_)){
         return;
     }
-    for (auto& button : buttons_){
-        if (button->isClicked()){
-            button->onClick();
+    for (auto& button : materialButtons_){
+        if (button.isClicked()){
+            button.onClick();
         }
     }
 }
 
 void Menu::draw() const{
     DrawRectangleRec(bounds_, color_);
-    for (const auto& button : buttons_){
-        button->draw();
+    for (const auto& button : materialButtons_){
+        button.draw();
+        button.selected();
     }
 }

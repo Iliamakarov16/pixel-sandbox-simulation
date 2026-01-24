@@ -365,12 +365,13 @@ rwildcard=$(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst 
 
 # Define all source files required
 SRC_DIR = src
+CORE_DIR = core
 OBJ_DIR = obj
 
 # Define all object files from source files
 SRC = $(call rwildcard, *.c, *.h)
 #(Changed).cpp files are dealt with reccursively
-CPP_SOURCES = $(call rwildcard,$(SRC_DIR)/,*.cpp)
+CPP_SOURCES = $(call rwildcard,$(SRC_DIR)/,*.cpp) $(call rwildcard,$(CORE_DIR)/,*.cpp)
 OBJS ?= $(CPP_SOURCES)
 
 # If the caller passes a flat glob, expand recursively so subfolders work.

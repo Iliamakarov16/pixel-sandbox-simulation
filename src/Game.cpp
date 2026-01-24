@@ -18,15 +18,17 @@ void Game::changeBrushSize(){
 }
 
 void Game::drawSquareBrush(){
+    
     Vector2 mousePos = GetMousePosition();
-    int mousePosRow = mousePos.y / sim.getCellSize();
-    int mousePosCol = mousePos.x / sim.getCellSize();
+    int cell = sim.getCellSize();
+    int mousePosRow = mousePos.y / cell;
+    int mousePosCol = mousePos.x / cell;
+   
+    int half = brushSize / 2;
+    int topLeftRow = (mousePosRow - half) * cell;
+    int topLeftCol = (mousePosCol - half) * cell;
 
-    //top left corner of square
-    int topLeftRow = (mousePosRow - brushSize) * sim.getCellSize() ;
-    int topLeftCol = (mousePosCol - brushSize) * sim.getCellSize() ;
-
-    DrawRectangleLines(topLeftCol, topLeftRow, brushSize * sim.getCellSize(), brushSize * sim.getCellSize(), WHITE);
+    DrawRectangleLines(topLeftCol, topLeftRow, brushSize * cell, brushSize * cell, WHITE);
 }
 
 void Game::applySquareBrush(){
@@ -34,17 +36,21 @@ void Game::applySquareBrush(){
     int mousePosRow = mousePos.y / sim.getCellSize();
     int mousePosCol = mousePos.x / sim.getCellSize();
 
-    //top left corner of square
-    int topLeftRow = mousePosRow - brushSize;
-    int topLeftCol = mousePosCol - brushSize;
+    if (sim.isValidCell(mousePosRow, mousePosCol)){
+        int half = brushSize / 2;
+        int topLeftRow = mousePosRow - half;
+        int topLeftCol = mousePosCol - half;
+        int bottomRow = topLeftRow + brushSize;
+        int rightCol = topLeftCol + brushSize;
 
-    if (brushSize == 1){
-        sim.setCell(topLeftRow, topLeftCol, currentMaterial);
-    }
-    else{
-        for (int row = topLeftRow; row < mousePosRow; row++){
-            for (int col = topLeftCol; col < mousePosCol; col++){
-                sim.setCell(row, col, currentMaterial);
+        if (brushSize == 1){
+            sim.setCell(topLeftRow, topLeftCol, currentMaterial);
+        }
+        else{
+            for (int row = topLeftRow; row < bottomRow; row++){
+                for (int col = topLeftCol; col < rightCol; col++){
+                    sim.setCell(row, col, currentMaterial);
+                }
             }
         }
     }
@@ -91,19 +97,22 @@ void Game::drawCircleBrush(){
 }
 
 void Game::applyCircleBrush(){
+    
     Vector2 mousePos = GetMousePosition();
     int centerRow = mousePos.y / sim.getCellSize();
     int centerCol = mousePos.x / sim.getCellSize();
 
-    int r = brushSize;
-    int r2 = r * r;
+    if (sim.isValidCell(centerRow, centerCol)){
+        int r = brushSize;
+        int r2 = r * r;
 
-    for (int row = centerRow - r; row <= centerRow + r; ++row){
-        for (int col = centerCol - r; col <= centerCol + r; ++col){
-            int dr = row - centerRow;
-            int dc = col - centerCol;
-            if (dr*dr + dc*dc <= r2){
-                sim.setCell(row, col, currentMaterial);
+        for (int row = centerRow - r; row <= centerRow + r; ++row){
+            for (int col = centerCol - r; col <= centerCol + r; ++col){
+                int dr = row - centerRow;
+                int dc = col - centerCol;
+                if (dr*dr + dc*dc <= r2){
+                    sim.setCell(row, col, currentMaterial);
+                }
             }
         }
     }
@@ -139,28 +148,19 @@ void Game::keyboardControls(){
     if (IsKeyPressed(KEY_C)){//C clears grid
         sim.clear();
     }
-    if (IsKeyPressed(KEY_F1)){
-        currentMaterial = getMaterial(SAND);
-    }
-    if (IsKeyPressed(KEY_F2)){
-        currentMaterial = getMaterial(WATER);
-    }
-    if (IsKeyPressed(KEY_F3)){
-        currentMaterial = getMaterial(STEAM);
-    }
-    if (IsKeyPressed(KEY_F4)){
-        currentMaterial = getMaterial(STONE);
-    }
     if (IsKeyPressed(KEY_LEFT_BRACKET)){
-        if (ticksPerSecond > 0){
-            ticksPerSecond -= 1;
+        if (fps > 0){
+            fps--;
+            SetTargetFPS(fps);
         }
         else{
-            ticksPerSecond = 0;
+            fps = 0;
+            SetTargetFPS(fps);
         }
     }
     if (IsKeyPressed(KEY_RIGHT_BRACKET)){
-        ticksPerSecond++;
+        fps++;
+        SetTargetFPS(fps);
     }
     if (IsKeyPressed(KEY_O)){
         isCircleBrush = !isCircleBrush;
@@ -183,25 +183,26 @@ void Game::draw(){
         drawCircleBrush();
     }
     menu_.draw();
-    DrawText(TextFormat("TPS: %.0f", ticksPerSecond), 0, GetScreenHeight() - 20, 20, WHITE);
+    DrawText(TextFormat("FPS: %i", fps), 0, GetScreenHeight() - 20, 15, WHITE);//temp solution
 }
 
 void Game::update(){
-    while (tickTriggered()){
-        sim.simulate();
-    }
+    // while (tickTriggered()){
+    fps = GetFPS();
+    sim.simulate();
+    // }
 }
 
-bool Game::tickTriggered(){
-    const double currTime = GetTime();
-    if (ticksPerSecond <= 0.0){
-        return false;
-    }
+// bool Game::tickTriggered(){
+//     const double currTime = GetTime();
+//     if (ticksPerSecond <= 0.0){
+//         return false;
+//     }
 
-    const double tickInterval = 1.0 / ticksPerSecond;
-    if (currTime - lastUpdateTime >= tickInterval){
-        lastUpdateTime += tickInterval;
-        return true;
-    }
-    return false;
-}
+//     const double tickInterval = 1.0 / ticksPerSecond;
+//     if (currTime - lastUpdateTime >= tickInterval){
+//         lastUpdateTime += tickInterval;
+//         return true;
+//     }
+//     return false;
+// }

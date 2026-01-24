@@ -17,6 +17,8 @@ public:
     void draw() const;
 
     bool isClicked();
+
+    Rectangle getButtonRect() const;
     
     virtual void onClick() = 0;
 };

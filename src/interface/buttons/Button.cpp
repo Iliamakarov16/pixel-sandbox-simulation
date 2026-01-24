@@ -30,3 +30,14 @@ bool Button::isClicked(){
     Vector2 mouse = GetMousePosition();
     return CheckCollisionPointRec(mouse, buttonRect) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
 }
+
+Rectangle Button::getButtonRect() const{
+    const int fontSize = 20;
+    const int textWidth = MeasureText(text_.c_str(), fontSize);
+    const int sidePadding = 10;
+
+    const float width = textWidth + sidePadding * 2;
+    const float height = 30;
+
+    return Rectangle{x_, y_, width, height};
+}

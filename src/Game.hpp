@@ -1,8 +1,8 @@
 #pragma once 
 
 #include "include/raylib.h"
-#include "SimMaterial.hpp"
-#include "Simulation.hpp"
+#include "core/SimMaterial.hpp"
+#include "core/Simulation.hpp"
 #include "interface/Menu.hpp"
 #include <iostream>
 
@@ -11,9 +11,11 @@ class Game{
 
     bool isGameActive;
     double lastUpdateTime;
-    double ticksPerSecond;
+    int fps;
+
     int brushSize;
     bool isCircleBrush;
+
     SimMaterial currentMaterial;
     Menu menu_;
     
@@ -29,14 +31,14 @@ class Game{
     
     void mouseControls();
     void keyboardControls();
-    bool tickTriggered();
+    // bool tickTriggered();
 public:
     Game(const int& rows, const int& cols, const int& cellSize)
         : sim(rows * 0.75/*75% of window is game field*/, cols, cellSize), 
         isGameActive(true),
         lastUpdateTime(0.0),
-        ticksPerSecond(30.0),
-        brushSize(1), 
+        // ticksPerSecond(30.0),
+        brushSize(10), 
         isCircleBrush(false), 
         currentMaterial(getMaterial(SAND)),
         menu_(*this, static_cast<int>(rows * 0.75), DARKGRAY) {}   
@@ -44,6 +46,8 @@ public:
     void update();
     void gameControls();
     void draw();
-    void setCurrentMaterial(MaterialID id){ currentMaterial = getMaterial(id); }
-    
+    void setCurrentMaterial(MaterialID id)
+        { currentMaterial = getMaterial(id); }
+    SimMaterial getCurrentMaterial() const
+        {return currentMaterial;}
 };
