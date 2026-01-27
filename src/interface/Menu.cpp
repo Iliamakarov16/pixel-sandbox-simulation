@@ -15,7 +15,7 @@ Menu::Menu(Game& game, int menuTopRow, Color color)
     const float maxX = bounds_.x + bounds_.width - padding;
 
     for (int i = 1; i < MATERIAL_COUNT; i++){
-        const SimMaterial& material = getMaterial(static_cast<MaterialID>(i));
+        const SimMaterial& material = getMaterial(MaterialID(i));
         const float buttonWidth = MeasureText(material.name.c_str(), fontSize) + sidePadding * 2;
 
         if (x + buttonWidth > maxX){

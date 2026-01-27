@@ -5,15 +5,12 @@ void Game::changeBrushSize(){
     
     if (wheel > 0){//Scroll up increases brush size
         brushSize += (int)wheel;
-        std::cout << brushSize << '\n';
     }
     if (wheel < 0 && brushSize > 1){//Scroll down decreases brush size
         brushSize += (int)wheel;
-        std::cout << brushSize << '\n';
     }
     if (IsMouseButtonDown(MOUSE_BUTTON_MIDDLE) || brushSize < 1){
         brushSize = 1;
-        std::cout << brushSize << '\n';
     }
 }
 
@@ -118,9 +115,6 @@ void Game::applyCircleBrush(){
     }
 }
 
-
-// void Game::applyBrush(){}
-
 //Holding left mouse button sets current material to cell. Holding right mouse buttom makes cell empty
 void Game::mouseControls(){
     if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && !isCircleBrush){
@@ -129,6 +123,9 @@ void Game::mouseControls(){
     else if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
         applyCircleBrush();
     }
+    // if (IsKeyDown(KEY_K)){
+    //         sim.coutGrid();
+    // }
     if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT) && !isCircleBrush){//eraser
         SimMaterial lastCurrMat = currentMaterial;
         currentMaterial = getMaterial(EMPTY);
@@ -167,6 +164,24 @@ void Game::keyboardControls(){
     }
 }
 
+void Game::drawCellInfo(){
+    Vector2 mousePos = GetMousePosition();
+    int mousePosRow = mousePos.y / sim.getCellSize();
+    int mousePosCol = mousePos.x / sim.getCellSize();
+
+    if (!sim.isValidCell(mousePosRow, mousePosCol)) {
+        return;
+    }
+
+    std::string matName = sim.getCell(mousePosRow, mousePosCol).name;
+    const char* matNameC = matName.c_str();
+    int nameTextSize = MeasureText(TextFormat("Material: %s", matNameC), 15);
+    DrawText(TextFormat("Material: %s", matNameC), 60, GetScreenHeight() - 20, 15, WHITE);
+
+    int temp = sim.getCellTemperature(mousePosRow, mousePosCol);
+    DrawText(TextFormat("Temperature: %i", temp), 70 + nameTextSize, GetScreenHeight() - 20, 15, WHITE);
+}
+
 void Game::gameControls(){
     menu_.update();
     mouseControls();
@@ -184,25 +199,11 @@ void Game::draw(){
     }
     menu_.draw();
     DrawText(TextFormat("FPS: %i", fps), 0, GetScreenHeight() - 20, 15, WHITE);//temp solution
+    drawCellInfo();
 }
 
 void Game::update(){
-    // while (tickTriggered()){
     fps = GetFPS();
     sim.simulate();
-    // }
 }
 
-// bool Game::tickTriggered(){
-//     const double currTime = GetTime();
-//     if (ticksPerSecond <= 0.0){
-//         return false;
-//     }
-
-//     const double tickInterval = 1.0 / ticksPerSecond;
-//     if (currTime - lastUpdateTime >= tickInterval){
-//         lastUpdateTime += tickInterval;
-//         return true;
-//     }
-//     return false;
-// }

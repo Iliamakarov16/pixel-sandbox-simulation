@@ -3,21 +3,21 @@
 
 int main() 
 {
-    constexpr int SCREEN_WIDTH = 1200;
-    constexpr int SCREEN_HEIGHT = 1000;
-    constexpr int CELL_SIZE = 5;
-    constexpr int FPS = 60;
+    int screenWidth = 1400;
+    int screenHeight = 1000;
+    constexpr int CELL_SIZE = 10;
+    constexpr int FPS = 45;
     
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Pixel sandbox game");
+    InitWindow(screenWidth, screenHeight, "Pixel sandbox game");
     SetTargetFPS(FPS);
     
     
-    Game game(SCREEN_HEIGHT, SCREEN_WIDTH, CELL_SIZE); 
-
+    Game game(screenHeight, screenWidth, CELL_SIZE); 
+    game.setTitle();
     while (!WindowShouldClose()){
         if (IsWindowResized())
         BeginDrawing();
-
+        
         game.update();
         game.gameControls();
 

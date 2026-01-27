@@ -13,11 +13,20 @@ bool Grid::isValidCell(const int& row, const int& col) const{
 }
 
 void Grid::setCell(const int& row, const int& col, const SimMaterial& material){
-    if (isValidCell(row, col) && cells_[row][col].id == EMPTY){
-        cells_[row][col] = material; 
+    if (!isValidCell(row, col)) {
+        return;
     }
-    else if (isValidCell(row, col) && material.id == EMPTY){//allows setting empty
+    if (cells_[row][col].id == EMPTY) {
         cells_[row][col] = material;
+        return;
+    }
+    if (material.id == EMPTY) { // allows setting empty
+        cells_[row][col] = material;
+        return;
+    }
+    if (material.id == FLAME && cells_[row][col].isFlammable) {
+        cells_[row][col] = material;
+        return;
     }
 }
 

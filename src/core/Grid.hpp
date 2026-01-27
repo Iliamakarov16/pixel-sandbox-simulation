@@ -29,6 +29,7 @@ public:
     int getRows() const {return rows_;}
     int getColumns() const {return cols_;}
     int getCellSize() const {return cellSize_;}
+    void setCells(std::vector<std::vector<SimMaterial>> vec){cells_ = vec;}
 
     void swapCells(const int& row_1, const int& col_1, const int& row_2, const int& col_2);
 };
