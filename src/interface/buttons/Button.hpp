@@ -21,4 +21,5 @@ public:
     Rectangle getButtonRect() const;
     
     virtual void onClick() = 0;
+    virtual ~Button() = default;
 };

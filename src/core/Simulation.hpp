@@ -53,8 +53,7 @@ private:
     void displacement(const int& row_1, const int& col_1, const int& row_2, const int& col_2);
     /// @brief Applies random color tint for inputed material
     SimMaterial varyColor(SimMaterial material);
-    SimMaterial getColoredMaterial(MaterialID id)
-        {return varyColor(getMaterial(id));}
+    
     
 public:
     Simulation(const int& rows, const int& cols, const int& cellSize) :
@@ -105,8 +104,12 @@ public:
 
     int getCellSize() const 
         {return grid_.getCellSize();}
-    // void coutGrid();
-    void setGrid();
+        
+    void setTitleGrid()
+        {grid_.setCells(getTitleGrid());}
+        
+    SimMaterial getColoredMaterial(MaterialID id)
+        {return varyColor(getMaterial(id));}
 };
 
 enum Directions{//enum for offset

@@ -13,7 +13,7 @@ int main()
     
     
     Game game(screenHeight, screenWidth, CELL_SIZE); 
-    game.setTitle();
+    game.setTitleGrid();
     while (!WindowShouldClose()){
         if (IsWindowResized())
         BeginDrawing();

@@ -50,5 +50,6 @@ public:
         { currentMaterial = getMaterial(id); }
     SimMaterial getCurrentMaterial() const
         {return currentMaterial;}
-    void setTitle(){ sim.setGrid();}
+    void setTitleGrid()
+        { sim.setTitleGrid();}
 };
