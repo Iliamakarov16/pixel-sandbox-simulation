@@ -11,18 +11,18 @@ int main()
     InitWindow(screenWidth, screenHeight, "Pixel sandbox game");
     SetTargetFPS(FPS);
     
-    
     Game game(screenHeight, screenWidth, CELL_SIZE); 
+
     game.setTitleGrid();
+
     while (!WindowShouldClose()){
-        if (IsWindowResized())
         BeginDrawing();
+        if (game.isGameActive){
+            game.update();
+            game.gameControls();
+            ClearBackground(BLACK);
+        }
         
-        game.update();
-        game.gameControls();
-
-        ClearBackground(BLACK);
-
         game.draw();
 
         EndDrawing();

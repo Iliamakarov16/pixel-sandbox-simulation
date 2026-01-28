@@ -23,9 +23,8 @@ Menu::Menu(Game& game, int menuTopRow, Color color)
             y += buttonHeight + padding;
         }
 
-        materialButtons_.push_back(MaterialButton(
-            x, y, material.name, BLACK, material.color, material, game_
-        ));
+        materialButtons_.push_back(MaterialButton
+            (x, y, material.name, BLACK, material.color, game_, material));
         x += buttonWidth + padding;
     }
 }

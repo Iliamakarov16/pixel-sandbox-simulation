@@ -4,12 +4,13 @@
 #include "core/SimMaterial.hpp"
 #include "core/Simulation.hpp"
 #include "interface/Menu.hpp"
+#include "interface/buttons/StartButton.hpp"
 #include <iostream>
 
 class Game{
     Simulation sim;
 
-    bool isGameActive;
+    
     double lastUpdateTime;
     int fps;
 
@@ -33,23 +34,34 @@ class Game{
     void keyboardControls();
 
     void drawCellInfo();
+    StartButton startButton;
 public:
+    bool isGameActive;
+
     Game(const int& rows, const int& cols, const int& cellSize)
-        : sim(rows * 0.75/*75% of window is game field*/, cols, cellSize), 
-        isGameActive(true),
+        : sim(rows * 0.75/*75% of window is game field*/, cols, cellSize),
         lastUpdateTime(0.0),
         brushSize(5), 
         isCircleBrush(false), 
         currentMaterial(getMaterial(SAND)),
-        menu_(*this, static_cast<int>(rows * 0.75), DARKGRAY) {}   
+        menu_(*this, static_cast<int>(rows * 0.75), DARKGRAY),
+        startButton(cols/2, rows/2, "Start", BLACK, WHITE, *this),
+        isGameActive(false) {}  
+
+    
         
     void update();
+
     void gameControls();
+
     void draw();
+
     void setCurrentMaterial(MaterialID id)
         { currentMaterial = getMaterial(id); }
+
     SimMaterial getCurrentMaterial() const
         {return currentMaterial;}
+
     void setTitleGrid()
         { sim.setTitleGrid();}
 };

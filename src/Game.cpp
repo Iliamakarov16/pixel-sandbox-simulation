@@ -183,6 +183,10 @@ void Game::drawCellInfo(){
 }
 
 void Game::gameControls(){
+    if (!isGameActive) {
+        startButton.onClick();
+        return;
+    }
     menu_.update();
     mouseControls();
     keyboardControls();
@@ -197,8 +201,14 @@ void Game::draw(){
     else{
         drawCircleBrush();
     }
+    
     menu_.draw();
-    DrawText(TextFormat("FPS: %i", fps), 0, GetScreenHeight() - 20, 15, WHITE);//temp solution
+
+    if (!isGameActive){
+        startButton.draw();
+    }   
+
+    DrawText(TextFormat("FPS: %i", fps), 0, GetScreenHeight() - 20, 15, WHITE);//Draw FPS
     drawCellInfo();
 }
 

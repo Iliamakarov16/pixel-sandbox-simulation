@@ -1,4 +1,5 @@
 #include "Button.hpp"
+#include "src/Game.hpp"
 
 void Button::draw() const{
     const int fontSize = 20;
