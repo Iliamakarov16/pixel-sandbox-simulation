@@ -17,9 +17,10 @@ int main()
 
     while (!WindowShouldClose()){
         BeginDrawing();
+        game.gameControls();
         if (game.isGameActive){
             game.update();
-            game.gameControls();
+            
             ClearBackground(BLACK);
         }
         

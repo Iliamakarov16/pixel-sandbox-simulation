@@ -521,4 +521,12 @@ void Simulation::setCell(const int& row, const int& col, const SimMaterial& mate
     }
 }
 
-
+void Simulation::removeStone(){
+    for (int row = 0; row < grid_.getRows(); row++){
+        for (int col = 0; col < grid_.getColumns(); col++){
+            if (getCell(row, col).id == STONE){
+                setCell(row, col, getMaterial(EMPTY));
+            }
+        }
+    }
+}

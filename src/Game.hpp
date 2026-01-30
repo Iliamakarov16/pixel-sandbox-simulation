@@ -10,7 +10,6 @@
 class Game{
     Simulation sim;
 
-    
     double lastUpdateTime;
     int fps;
 
@@ -49,9 +48,8 @@ public:
         isGameActive(false) {}  
 
     
-        
     void update();
-
+    
     void gameControls();
 
     void draw();
@@ -64,4 +62,5 @@ public:
 
     void setTitleGrid()
         { sim.setTitleGrid();}
+    bool eventTriggered(double interval);
 };

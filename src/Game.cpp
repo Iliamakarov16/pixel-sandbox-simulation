@@ -123,9 +123,6 @@ void Game::mouseControls(){
     else if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
         applyCircleBrush();
     }
-    // if (IsKeyDown(KEY_K)){
-    //         sim.coutGrid();
-    // }
     if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT) && !isCircleBrush){//eraser
         SimMaterial lastCurrMat = currentMaterial;
         currentMaterial = getMaterial(EMPTY);
@@ -138,8 +135,8 @@ void Game::mouseControls(){
         applyCircleBrush();
         currentMaterial = lastCurrMat;
     }
-
 }
+
 
 void Game::keyboardControls(){
     if (IsKeyPressed(KEY_C)){//C clears grid
@@ -183,24 +180,31 @@ void Game::drawCellInfo(){
 }
 
 void Game::gameControls(){
-    if (!isGameActive) {
+    if (!isGameActive && startButton.isClicked()) {
+        sim.removeStone();
         startButton.onClick();
         return;
     }
     menu_.update();
-    mouseControls();
+    if (!isGameActive){
+       mouseControls(); 
+    }
+        
     keyboardControls();
     changeBrushSize();
 }
 
 void Game::draw(){
     sim.draw();
-    if (!isCircleBrush){
-        drawSquareBrush();
+    if (isGameActive){
+        if (!isCircleBrush){
+            drawSquareBrush();
+        }
+        else{
+            drawCircleBrush();
+        }
     }
-    else{
-        drawCircleBrush();
-    }
+    
     
     menu_.draw();
 
@@ -217,3 +221,12 @@ void Game::update(){
     sim.simulate();
 }
 
+bool Game::eventTriggered(double interval){
+    double currTime = GetTime();
+
+    if (currTime - lastUpdateTime >= interval){
+        lastUpdateTime = currTime;
+        return true;
+    }
+    return false;
+} 
