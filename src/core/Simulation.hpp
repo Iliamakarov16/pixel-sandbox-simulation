@@ -110,6 +110,7 @@ public:
         
     SimMaterial getColoredMaterial(MaterialID id)
         {return varyColor(getMaterial(id));}
+        
     void removeStone();
 };
 

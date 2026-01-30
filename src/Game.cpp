@@ -180,13 +180,13 @@ void Game::drawCellInfo(){
 }
 
 void Game::gameControls(){
-    if (!isGameActive && startButton.isClicked()) {
-        sim.removeStone();
+    if (!isGameActive && startButton.isClicked() && eventTriggered(0.02)) {
+        //sim.removeStone();
         startButton.onClick();
         return;
     }
     menu_.update();
-    if (!isGameActive){
+    if (isGameActive){
        mouseControls(); 
     }
         

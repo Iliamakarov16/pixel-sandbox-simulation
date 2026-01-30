@@ -416,8 +416,8 @@ void Simulation::lavaInteractions(const int& row, const int& col){
         int neighborRow = row + offset.first;
         int neighborCol = col + offset.second;
         if (getCell(neighborRow, neighborCol).canEvaporate){
-            if (GetRandomValue(0, 10) == 0) tempGrid_.setCell(neighborRow, neighborCol, getColoredMaterial(STEAM));
-            if (GetRandomValue(0, 1000) == 0)  tempGrid_.setCell(row, col, getColoredMaterial(OBSIDIAN));
+            tempGrid_.setCell(neighborRow, neighborCol, getColoredMaterial(STEAM));
+            if (GetRandomValue(0, 100) == 0)  tempGrid_.setCell(row, col, getColoredMaterial(OBSIDIAN));
         }
     }
 } 
