@@ -1,5 +1,5 @@
 # Pixel Sandbox game
-<img width="1395" height="749" alt="Screenshot 2026-01-26 210337" src="https://github.com/user-attachments/assets/3818db28-1585-4370-8a8b-22e6d736df29" />
+<img width="1397" height="745" alt="Screenshot 2026-02-06 124909" src="https://github.com/user-attachments/assets/033b085f-2ee8-4acc-b2d2-c42e6863a51d" />
 
 This is simple, yet satisfying game made with raylib. The main idea of this game is to experiment with physics and interactions of different materials.    
 
@@ -23,4 +23,5 @@ Mouse:
 &emsp; Wheel scroll: Increase/Decrease brush size  
 &emsp; Middle Button: Swap brush (Circle/Square)  
 Keyboard:  
-&emsp; Key C: Clear screen
+&emsp; Key C: Clear screen  
+&emsp; Key P: Display game info(fps, cell name, cell temperature)
