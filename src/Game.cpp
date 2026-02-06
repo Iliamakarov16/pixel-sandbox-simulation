@@ -129,19 +129,19 @@ void Game::mouseControls(){
     else if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
         applyCircleBrush();
     }
-    if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT) && !isCircleBrush){//eraser
+    if ((IsMouseButtonDown(MOUSE_BUTTON_RIGHT) || (IsKeyDown(KEY_LEFT_SUPER) && IsMouseButtonDown(MOUSE_BUTTON_LEFT))) && !isCircleBrush){//eraser
         SimMaterial lastCurrMat = currentMaterial;
         currentMaterial = getMaterial(EMPTY);
         applySquareBrush();
         currentMaterial = lastCurrMat;
     }
-    else if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)){
+    else if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT) || (IsKeyDown(KEY_LEFT_SUPER) && IsMouseButtonDown(MOUSE_BUTTON_LEFT))){
         SimMaterial lastCurrMat = currentMaterial;
         currentMaterial = getMaterial(EMPTY);
         applyCircleBrush();
         currentMaterial = lastCurrMat;
     }
-    if (IsMouseButtonDown(MOUSE_BUTTON_MIDDLE)){
+    if (IsMouseButtonDown(MOUSE_BUTTON_MIDDLE) || IsKeyPressed(KEY_O)){
         isCircleBrush = !isCircleBrush;
     }
 }
