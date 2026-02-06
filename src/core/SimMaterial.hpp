@@ -19,6 +19,7 @@ enum MaterialID { EMPTY,
                   RAINY_CLOUD,
                   LAVA, 
                   OBSIDIAN,
+                  PROPANE,
                   MATERIAL_COUNT };
 
 enum MaterialType { NONE, GRANULAR, STATIC_SOLID, LIQUID, GAS, DYNAMIC_SOLID, CUSTOM};
@@ -35,6 +36,7 @@ const Color CLOUD_COLOR = {246, 246, 246, 255};
 const Color RAINY_CLOUD_COLOR = {116, 116, 116, 255};
 const Color LAVA_COLOR = {207, 16, 32, 255};
 const Color OBSIDIAN_COLOR = {46, 41, 58, 255};
+const Color PROPANE_COLOR = {156, 89, 0, 255};
 
 struct SimMaterial{
     std::string name;

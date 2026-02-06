@@ -9,7 +9,7 @@ void Game::changeBrushSize(){
     if (wheel < 0 && brushSize > 1){//Scroll down decreases brush size
         brushSize += (int)wheel;
     }
-    if (IsMouseButtonDown(MOUSE_BUTTON_MIDDLE) || brushSize < 1){
+    if (brushSize < 1){
         brushSize = 1;
     }
 }
@@ -135,30 +135,31 @@ void Game::mouseControls(){
         applyCircleBrush();
         currentMaterial = lastCurrMat;
     }
+    if (IsMouseButtonDown(MOUSE_BUTTON_MIDDLE)){
+        isCircleBrush = !isCircleBrush;
+    }
 }
 
 
 void Game::keyboardControls(){
     if (IsKeyPressed(KEY_C)){//C clears grid
-        sim.clear();
+        clear();
     }
-    if (IsKeyPressed(KEY_LEFT_BRACKET)){
-        if (fps > 0){
-            fps--;
-            SetTargetFPS(fps);
-        }
-        else{
-            fps = 0;
-            SetTargetFPS(fps);
-        }
-    }
-    if (IsKeyPressed(KEY_RIGHT_BRACKET)){
-        fps++;
-        SetTargetFPS(fps);
-    }
-    if (IsKeyPressed(KEY_O)){
-        isCircleBrush = !isCircleBrush;
-    }
+    // if (IsKeyPressed(KEY_LEFT_BRACKET)){
+    //     if (fps > 0){
+    //         fps--;
+    //         SetTargetFPS(fps);
+    //     }
+    //     else{
+    //         fps = 0;
+    //         SetTargetFPS(fps);
+    //     }
+    // }
+    // if (IsKeyPressed(KEY_RIGHT_BRACKET)){
+    //     fps++;
+    //     SetTargetFPS(fps);
+    // }
+    
 }
 
 void Game::drawCellInfo(){
@@ -180,7 +181,7 @@ void Game::drawCellInfo(){
 }
 
 void Game::gameControls(){
-    if (!isGameActive && startButton.isClicked() && eventTriggered(0.02)) {
+    if (!isGameActive && startButton.isClicked() && eventTriggered(0.5)) {
         //sim.removeStone();
         startButton.onClick();
         return;

@@ -5,6 +5,8 @@ Menu::Menu(Game& game, int menuTopRow, Color color)
     : game_(game),
       bounds_{0.0f, static_cast<float>(menuTopRow), static_cast<float>(GetScreenWidth()), static_cast<float>(GetScreenHeight() - menuTopRow)},
       color_(color){
+        
+    //Initiation of material buttons
     const int textSize = 20;
     const int sidePadding = 10;
     const float buttonHeight = 30.0f;

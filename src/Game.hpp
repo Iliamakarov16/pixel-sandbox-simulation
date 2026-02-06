@@ -44,7 +44,7 @@ public:
         isCircleBrush(false), 
         currentMaterial(getMaterial(SAND)),
         menu_(*this, static_cast<int>(rows * 0.75), DARKGRAY),
-        startButton(cols/2 - 70, rows/2, "Start", 50, BLACK, WHITE, *this),
+        startButton(cols/2 - 100, rows/2, "Start", 50, BLACK, WHITE, *this),
         isGameActive(false) {}  
 
     
@@ -58,9 +58,12 @@ public:
         { currentMaterial = getMaterial(id); }
 
     SimMaterial getCurrentMaterial() const
-        {return currentMaterial;}
+        { return currentMaterial; }
 
     void setTitleGrid()
-        { sim.setTitleGrid();}
+        { sim.setTitleGrid(); }
+
     bool eventTriggered(double interval);
+    void clear()
+        { sim.clear(); }
 };
