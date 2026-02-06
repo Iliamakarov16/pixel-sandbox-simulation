@@ -11,11 +11,12 @@ This is simple, yet satisfying game made with raylib. The main idea of this game
 5. Temperature physics(Right now works only to ignite something with lava)
 
 ### How to play 
-1. You can use Sandbox.exe to run it or Sandbox Unix executable if you run it on mac.
-2. If you want to modify the game you can use VS code.
-     1. Enter the game directory
-     2. Click on "main.code-workspace" file and click "Open Workspace".
-     3. After this you will be able to run game by opening main.cpp and clicking F5(or fn + F5 if using Mac) to run it.
+1. You can use Sandbox.exe to run it or Sandbox Unix executable if you run it on mac.  
+&emsp; Note: You can simply download the executable, as it doesn't depend on external files.
+3. If you want to modify the game you can use VS code.
+     1. Open the game directory
+     2. Open the "main.code-workspace" file and select "Open Workspace".
+     3. Open main.cpp and press F5 (or Fn + F5 on Mac) to run the game.
 ### Controls
 Mouse:  
 &emsp; Left Button: Place material  
