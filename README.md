@@ -11,7 +11,7 @@ This is simple, yet satisfying game made with raylib. The main idea of this game
 5. Temperature physics(Right now works only to ignite something from lava)
 
 ### How to play 
-1. You can use GameOfLife.exe to run it or GameOfLife Unix executable if you run it on mac.
+1. You can use Sandbox.exe to run it or Sandbox Unix executable if you run it on mac.
 2. If you want to modify the game you can use VS code.
      1. Enter the game directory
      2. Click on "main.code-workspace" file and click "Open Workspace".
