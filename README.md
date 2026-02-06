@@ -8,7 +8,7 @@ This is simple, yet satisfying game made with raylib. The main idea of this game
 2. Fire physics(try to ignite something)
 3. Simple density physics
 4. Simple viscousity physics
-5. Temperature physics(Right now works only to ignite something from lava)
+5. Temperature physics(Right now works only to ignite something with lava)
 
 ### How to play 
 1. You can use Sandbox.exe to run it or Sandbox Unix executable if you run it on mac.
