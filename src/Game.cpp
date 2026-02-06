@@ -117,6 +117,12 @@ void Game::applyCircleBrush(){
 
 //Holding left mouse button sets current material to cell. Holding right mouse buttom makes cell empty
 void Game::mouseControls(){
+    if (ignoreMouseUntilRelease){
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) || IsMouseButtonDown(MOUSE_BUTTON_RIGHT) || IsMouseButtonDown(MOUSE_BUTTON_MIDDLE)){
+            return;
+        }
+        ignoreMouseUntilRelease = false;
+    }
     if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && !isCircleBrush){
         applySquareBrush();
     }
@@ -145,6 +151,15 @@ void Game::keyboardControls(){
     if (IsKeyPressed(KEY_C)){//C clears grid
         clear();
     }
+    if (IsKeyPressed(KEY_P)){//C clears grid
+        drawGameInfo = !drawGameInfo;
+    }
+    // Hotkey to output current Grid
+    // if (IsKeyPressed(KEY_K)){//C clears grid
+    //     std::cout << sim.getTitleVectorContents();
+    // }
+
+    //Hotkeys to change FPS
     // if (IsKeyPressed(KEY_LEFT_BRACKET)){
     //     if (fps > 0){
     //         fps--;
@@ -181,9 +196,9 @@ void Game::drawCellInfo(){
 }
 
 void Game::gameControls(){
-    if (!isGameActive && startButton.isClicked() && eventTriggered(0.5)) {
-        //sim.removeStone();
+    if (!isGameActive && startButton.isClicked()) { 
         startButton.onClick();
+        ignoreMouseUntilRelease = true;
         return;
     }
     menu_.update();
@@ -205,29 +220,24 @@ void Game::draw(){
             drawCircleBrush();
         }
     }
-    
-    
+
     menu_.draw();
 
     if (!isGameActive){
         startButton.draw();
     }   
-
-    DrawText(TextFormat("FPS: %i", fps), 0, GetScreenHeight() - 20, 15, WHITE);//Draw FPS
-    drawCellInfo();
+    if (drawGameInfo){
+        DrawText(TextFormat("FPS: %i", fps), 0, GetScreenHeight() - 20, 15, WHITE);//Draw FPS
+        drawCellInfo();
+    }
 }
 
 void Game::update(){
-    fps = GetFPS();
+    if (drawGameInfo){
+        fps = GetFPS();
+    }
+
     sim.simulate();
 }
 
-bool Game::eventTriggered(double interval){
-    double currTime = GetTime();
 
-    if (currTime - lastUpdateTime >= interval){
-        lastUpdateTime = currTime;
-        return true;
-    }
-    return false;
-} 

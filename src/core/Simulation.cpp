@@ -1,9 +1,31 @@
 #include "Simulation.hpp"
 #include <algorithm>
+#include <sstream>
 
 namespace {
     constexpr int kAmbientTemp = 25;
     constexpr float kLavaHeatSource = 0.2f;
+    constexpr const char* kMaterialIdNames[] = {
+        "EMPTY",
+        "SAND",
+        "WATER",
+        "STONE",
+        "STONE_WALL",
+        "STEAM",
+        "WET_SAND",
+        "SMOKE",
+        "FLAME",
+        "WOOD",
+        "LEAF",
+        "OIL",
+        "CLOUD",
+        "RAINY_CLOUD",
+        "LAVA",
+        "OBSIDIAN",
+        "PROPANE"
+    };
+    static_assert(sizeof(kMaterialIdNames) / sizeof(kMaterialIdNames[0]) == MATERIAL_COUNT,
+        "Update kMaterialIdNames to match MaterialID.");
 }
 
 //Temperature system
@@ -521,12 +543,25 @@ void Simulation::setCell(const int& row, const int& col, const SimMaterial& mate
     }
 }
 
-void Simulation::removeStone(){
-    for (int row = 0; row < grid_.getRows(); row++){
-        for (int col = 0; col < grid_.getColumns(); col++){
-            if (getCell(row, col).id == STONE){
-                setCell(row, col, getMaterial(EMPTY));
+//outputs vector contents to assign for title
+std::string Simulation::getTitleVectorContents(bool useColoredMaterial) const{
+    std::ostringstream out;
+    const char* getter = useColoredMaterial ? "sim.getColoredMaterial" : "getMaterial";
+    for (int row = 0; row < grid_.getRows(); ++row) {
+        out << "{";
+        for (int col = 0; col < grid_.getColumns(); ++col) {
+            if (col > 0) {
+                out << ", ";
             }
+            const MaterialID id = getCell(row, col).id;
+            out << getter << "(" << kMaterialIdNames[id] << ")";
+        }
+        out << "}";
+        if (row + 1 < grid_.getRows()) {
+            out << ",\n";
         }
     }
+
+    return out.str();
 }
+

@@ -7,6 +7,7 @@
 #include <utility>
 #include <algorithm>
 #include <iostream>
+#include <string>
 #include "Title.hpp"
 class Simulation {
 private:
@@ -107,11 +108,12 @@ public:
         
     void setTitleGrid()
         {grid_.setCells(getTitleGrid());}
+
+    std::string getTitleVectorContents(bool useColoredMaterial = true) const;
         
     SimMaterial getColoredMaterial(MaterialID id)
         {return varyColor(getMaterial(id));}
         
-    void removeStone();
 };
 
 enum Directions{//enum for offset
