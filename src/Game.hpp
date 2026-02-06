@@ -44,7 +44,7 @@ public:
         isCircleBrush(false), 
         currentMaterial(getMaterial(SAND)),
         menu_(*this, static_cast<int>(rows * 0.75), DARKGRAY),
-        startButton(cols/2, rows/2, "Start", BLACK, WHITE, *this),
+        startButton(cols/2 - 70, rows/2, "Start", 50, BLACK, WHITE, *this),
         isGameActive(false) {}  
 
     

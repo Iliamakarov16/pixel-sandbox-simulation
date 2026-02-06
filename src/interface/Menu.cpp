@@ -5,7 +5,7 @@ Menu::Menu(Game& game, int menuTopRow, Color color)
     : game_(game),
       bounds_{0.0f, static_cast<float>(menuTopRow), static_cast<float>(GetScreenWidth()), static_cast<float>(GetScreenHeight() - menuTopRow)},
       color_(color){
-    const int fontSize = 20;
+    const int textSize = 20;
     const int sidePadding = 10;
     const float buttonHeight = 30.0f;
     const float padding = 10.0f;
@@ -16,7 +16,7 @@ Menu::Menu(Game& game, int menuTopRow, Color color)
 
     for (int i = 1; i < MATERIAL_COUNT; i++){
         const SimMaterial& material = getMaterial(MaterialID(i));
-        const float buttonWidth = MeasureText(material.name.c_str(), fontSize) + sidePadding * 2;
+        const float buttonWidth = MeasureText(material.name.c_str(), textSize) + sidePadding * 2;
 
         if (x + buttonWidth > maxX){
             x = padding;
@@ -24,7 +24,7 @@ Menu::Menu(Game& game, int menuTopRow, Color color)
         }
 
         materialButtons_.push_back(MaterialButton
-            (x, y, material.name, BLACK, material.color, game_, material));
+            (x, y, material.name, textSize, BLACK, material.color, game_, material));
         x += buttonWidth + padding;
     }
 }
