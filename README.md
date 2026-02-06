@@ -4,7 +4,7 @@
 This is simple, yet satisfying game made with raylib. The main idea of this game is to experiment with physics and interactions of different materials.    
 
 ### What game offers in the current state?  
-1. 16 different materials, some of which have some kind of interaction or functionality.
+1. 16 different materials, the majority of which have some kind of interaction or functionality.
 2. Fire physics(try to ignite something)
 3. Simple density physics
 4. Simple viscousity physics
