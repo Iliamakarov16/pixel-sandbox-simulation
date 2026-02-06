@@ -117,30 +117,33 @@ void Game::applyCircleBrush(){
 
 //Holding left mouse button sets current material to cell. Holding right mouse buttom makes cell empty
 void Game::mouseControls(){
-    if (ignoreMouseUntilRelease){
+    if (ignoreMouseUntilRelease){//Disables mouse controls on first frame
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) || IsMouseButtonDown(MOUSE_BUTTON_RIGHT) || IsMouseButtonDown(MOUSE_BUTTON_MIDDLE)){
             return;
         }
         ignoreMouseUntilRelease = false;
     }
+    //Set material 
     if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && !isCircleBrush){
         applySquareBrush();
     }
     else if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
         applyCircleBrush();
     }
-    if ((IsMouseButtonDown(MOUSE_BUTTON_RIGHT) || (IsKeyDown(KEY_LEFT_SUPER) && IsMouseButtonDown(MOUSE_BUTTON_LEFT))) && !isCircleBrush){//eraser
+    //Eraser
+    if ((IsMouseButtonDown(MOUSE_BUTTON_RIGHT) || ((IsKeyDown(KEY_LEFT_SUPER)/*CMD*/ || IsKeyDown(KEY_LEFT_CONTROL)) && IsMouseButtonDown(MOUSE_BUTTON_LEFT))) && !isCircleBrush){
         SimMaterial lastCurrMat = currentMaterial;
         currentMaterial = getMaterial(EMPTY);
         applySquareBrush();
         currentMaterial = lastCurrMat;
     }
-    else if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT) || (IsKeyDown(KEY_LEFT_SUPER) && IsMouseButtonDown(MOUSE_BUTTON_LEFT))){
+    else if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT) || ((IsKeyDown(KEY_LEFT_SUPER)/*CMD*/ || IsKeyDown(KEY_LEFT_CONTROL)) && IsMouseButtonDown(MOUSE_BUTTON_LEFT))){
         SimMaterial lastCurrMat = currentMaterial;
         currentMaterial = getMaterial(EMPTY);
         applyCircleBrush();
         currentMaterial = lastCurrMat;
     }
+    //Change brush type
     if (IsMouseButtonDown(MOUSE_BUTTON_MIDDLE) || IsKeyPressed(KEY_O)){
         isCircleBrush = !isCircleBrush;
     }

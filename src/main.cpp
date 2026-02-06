@@ -8,7 +8,7 @@ int main()
     constexpr int CELL_SIZE = 10;
     constexpr int FPS = 45;
     
-    InitWindow(screenWidth, screenHeight, "Pixel sandbox game");
+    InitWindow(screenWidth, screenHeight, "Pixel sandbox");
     SetTargetFPS(FPS);
     
     Game game(screenHeight, screenWidth, CELL_SIZE); 
